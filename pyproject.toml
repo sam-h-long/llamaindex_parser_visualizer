@@ -11,6 +11,7 @@ streamlit = "^1.36.0"
 requests = "^2.32.3"
 pandas = "^2.2.2"
 llama-index = "^0.10.53"
+tiktoken = "^0.7.0"
 
 
 [build-system]
