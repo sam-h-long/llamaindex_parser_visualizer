@@ -4,5 +4,5 @@ channels:
 dependencies:
   - python=3.10.*
   - snowflake-snowpark-python=
-  - streamlit=1.36.0
-  - llama-index=0.10.53
+  - streamlit=
+  - llama-index=

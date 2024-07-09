@@ -82,3 +82,4 @@ if st.session_state.GITHUB_INPUTS != github_initial_inputs:
 #     st.session_state.FILE_NAMES = None
 if st.button("Show session state"):
     st.write(st.session_state)
+    st.write("Streamlit Version: ", st.__version__)

@@ -6,6 +6,7 @@ import tiktoken
 from enum import Enum
 from pathlib import Path
 
+import llama_index
 from llama_index.core.node_parser import MarkdownNodeParser, SimpleNodeParser
 from llama_index.core.schema import Document
 from llama_index.core.schema import MetadataMode
@@ -169,3 +170,4 @@ if st.button("Parse Documents", help=f"{emoji_icon} = {emoji_value} tokens but p
     st.code(f"Estimated cost to run: {sum(stats_tokens_w_meta) * cost_per_token_openai_ada * usd_to_nok:.2f} nok")
     if st.button("Run Embedding Stats"):
         st.write("TO DO: Run Embedding Stats")
+        st.write("LlamaIndex Version: ",llama_index.__version__)
