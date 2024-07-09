@@ -2,11 +2,11 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import requests
-import tiktoken
 from enum import Enum
 from pathlib import Path
 
 import llama_index
+import tiktoken
 from llama_index.core.node_parser import MarkdownNodeParser, SimpleNodeParser
 from llama_index.core.schema import Document
 from llama_index.core.schema import MetadataMode
