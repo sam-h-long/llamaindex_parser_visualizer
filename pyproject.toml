@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "llamaindex-parser-visualizer"
+version = "0.1.0"
+description = "Streamlit app to visualize the document node parsers from LLamaIndex"
+authors = ["Sam Longenbach <samuel.longenbach@storebrand.no>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
