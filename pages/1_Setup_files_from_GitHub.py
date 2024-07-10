@@ -50,12 +50,12 @@ def get_file_names_from_github(json_, access_token=_try_to_get_github_pat_secret
 
 col1a, col2a = st.columns(2)
 with col1a:
-    edit_input = st.text_area(label="Edit configuration:", value=st.session_state.GITHUB_INPUTS, height=220)
+    edit_input = st.text_area(label="**Edit configuration:**", value=st.session_state.GITHUB_INPUTS, height=220)
     st.session_state.GITHUB_INPUTS = edit_input
     st.caption(
-        "If repo is private, you need to create a [GitHub PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) and define it in [Streamlit secrets](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management). Example: GITHUB_PAT_TOKEN = 'ghp_....XXXXXXXXXXXX'")
+        "If the repo is private, you need to create a [GitHub PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) and define it in [Streamlit secrets](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management). Example: GITHUB_PAT_TOKEN = 'ghp_....XXXXXXXXXXXX'")
 with col2a:
-    st.write("Current configuration:")
+    st.write("**Current configuration:**")
     try:
         json_input = json.loads(st.session_state.GITHUB_INPUTS)
         st.write(json_input)
@@ -63,9 +63,8 @@ with col2a:
         st.write("Invalid JSON")
 
 files, success = get_file_names_from_github(json_=json_input)
-st.write(files)
 if success:
-    st.write("Files:")
+    st.write("**Loaded Files:**")
     # these session variables will lag behind the current values until success occurs
     st.session_state.GITHUB_OWNER = json_input["GITHUB_OWNER"]
     st.session_state.GITHUB_REPO = json_input["GITHUB_REPO"]
@@ -73,9 +72,10 @@ if success:
     # these session variables get initialized in Home.py
     st.session_state.GITHUB_BASEURL = f'https://github.com/{json_input["GITHUB_OWNER"]}/{json_input["GITHUB_REPO"]}/blob/{json_input["GITHUB_BRANCH"]}'
     st.session_state.FILE_NAMES = files
+    st.write(files)
 else:
     st.session_state.FILE_NAMES = None
     st.session_state.GITHUB_BASEURL = None
 
-if st.button("Show session state"):
+if st.button("Show Streamlit session state"):
     st.write(st.session_state)
