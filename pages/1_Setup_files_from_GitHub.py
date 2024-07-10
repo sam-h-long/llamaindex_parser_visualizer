@@ -6,8 +6,8 @@ from pathlib import Path
 st.title("Setup to load files from Github:")
 
 github_initial_inputs = '''{
-        "GITHUB_OWNER": "",
-        "GITHUB_REPO": "",
+        "GITHUB_OWNER": "sam-h-long",
+        "GITHUB_REPO": "llamaparse_pdf_to_markdown",
         "GITHUB_BRANCH": "main",
         "FILE_TYPES": [".md", ".txt"],
         "IGNORE_FILES": ["README.md", "requirements.txt"]
@@ -18,12 +18,6 @@ if "GITHUB_INPUTS" not in st.session_state.keys():
     st.session_state.GITHUB_OWNER = None
     st.session_state.GITHUB_REPO = None
     st.session_state.GITHUB_BRANCH = None
-
-if "GITHUB_BASEURL" not in st.session_state.keys():
-    st.session_state.GITHUB_BASEURL = None
-
-if "FILE_NAMES" not in st.session_state.keys():
-    st.session_state.FILE_NAMES = None
 
 
 def _try_to_get_github_pat_secret():
@@ -68,18 +62,20 @@ with col2a:
     except json.JSONDecodeError:
         st.write("Invalid JSON")
 
-if st.session_state.GITHUB_INPUTS != github_initial_inputs:
-    files, success = get_file_names_from_github(json_=json_input)
-    if success:
-        st.write("Files:")
-        st.session_state.GITHUB_OWNER = json_input["GITHUB_OWNER"]
-        st.session_state.GITHUB_REPO = json_input["GITHUB_REPO"]
-        st.session_state.GITHUB_BRANCH = json_input["GITHUB_BRANCH"]
-        st.session_state.GITHUB_BASEURL = f'https://github.com/{json_input["GITHUB_OWNER"]}/{json_input["GITHUB_REPO"]}/blob/{json_input["GITHUB_BRANCH"]}'
-        st.session_state.FILE_NAMES = files
-        st.write(files)
-# else:
-#     st.session_state.FILE_NAMES = None
+files, success = get_file_names_from_github(json_=json_input)
+st.write(files)
+if success:
+    st.write("Files:")
+    # these session variables will lag behind the current values until success occurs
+    st.session_state.GITHUB_OWNER = json_input["GITHUB_OWNER"]
+    st.session_state.GITHUB_REPO = json_input["GITHUB_REPO"]
+    st.session_state.GITHUB_BRANCH = json_input["GITHUB_BRANCH"]
+    # these session variables get initialized in Home.py
+    st.session_state.GITHUB_BASEURL = f'https://github.com/{json_input["GITHUB_OWNER"]}/{json_input["GITHUB_REPO"]}/blob/{json_input["GITHUB_BRANCH"]}'
+    st.session_state.FILE_NAMES = files
+else:
+    st.session_state.FILE_NAMES = None
+    st.session_state.GITHUB_BASEURL = None
+
 if st.button("Show session state"):
     st.write(st.session_state)
-    st.write("Streamlit Version: ", st.__version__)
