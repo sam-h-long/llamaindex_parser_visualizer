@@ -70,12 +70,10 @@ if success:
     st.session_state.GITHUB_REPO = json_input["GITHUB_REPO"]
     st.session_state.GITHUB_BRANCH = json_input["GITHUB_BRANCH"]
     # these session variables get initialized in Home.py
-    st.session_state.GITHUB_BASEURL = f'https://github.com/{json_input["GITHUB_OWNER"]}/{json_input["GITHUB_REPO"]}/blob/{json_input["GITHUB_BRANCH"]}'
     st.session_state.FILE_NAMES = files
     st.write(files)
 else:
     st.session_state.FILE_NAMES = None
-    st.session_state.GITHUB_BASEURL = None
 
 if st.button("Show Streamlit session state"):
     st.write(st.session_state)

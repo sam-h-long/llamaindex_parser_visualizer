@@ -16,8 +16,6 @@ from llama_index.core.schema import MetadataMode
 st.set_page_config(page_title="Visualize LlamaIndex Parsers", page_icon="🟦", initial_sidebar_state="collapsed", menu_items=None, layout='wide')
 st.title("Visualize LlamaIndex text parsers 📄🦙📝")
 
-if "GITHUB_BASEURL" not in st.session_state.keys():
-    st.session_state.GITHUB_BASEURL = None
 if "FILE_NAMES" not in st.session_state.keys():
     st.session_state.FILE_NAMES = None
 
@@ -155,15 +153,21 @@ if selected_markdown:
 
 
 col1b, col2b = st.columns(2)
-height_b = 1000
+height_b, ext_2b = 1000, 30
 # 1B) display Markdown text & pdf document if available
 with col1b:
-    #st.caption(f'**Original .pdf document:** [{selected_pdf}]({st.session_state.GITHUB_BASEURL}/{selected_pdf})')
-    label_1b = f"**File text url:** [{selected_markdown}]({st.session_state.GITHUB_BASEURL}/{selected_markdown}) **& if uploaded PDF:** [{selected_pdf}]({st.session_state.GITHUB_BASEURL}/{selected_pdf})"
+    file_url, pdf_url = None, None
+    if selected_markdown:
+        use_commit_or_branch = selected_commit
+        if use_commit_or_branch is None:
+            use_commit_or_branch = st.session_state.GITHUB_BRANCH
+        file_url = f'https://github.com/{st.session_state.GITHUB_OWNER}/{st.session_state.GITHUB_REPO}/blob/{use_commit_or_branch}/{selected_markdown}'
+        pdf_url = f'https://github.com/{st.session_state.GITHUB_OWNER}/{st.session_state.GITHUB_REPO}/blob/{st.session_state.GITHUB_BRANCH}/{selected_pdf}'
+    label_1b = f"**File text url:** [{selected_markdown}]({file_url}) **& if uploaded PDF:** [{selected_pdf}]({pdf_url})"
     selected_text = st.text_area(label=label_1b, value=m_text, height=height_b, placeholder="Paste text here...")
 # 2B) display rendered Markdown text
 with col2b:
-    with st.container(height=height_b+30):
+    with st.container(height=height_b+ext_2b):
         st.markdown(selected_text)
 
 
